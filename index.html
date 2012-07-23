@@ -4,11 +4,16 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Groupinputs : jQuery Group Inputs" />
+    <meta name="description" content="jQuery Group Inputs : Group Inputs Demo" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/creditcard.css">
 
-    <title>Groupinputs</title>
+    <script src="javascripts/jquery-1.7.2.js"></script>
+    <script src="javascripts/jquery.caret.js"></script>
+    <script src="javascripts/jquery.groupinputs.js"></script>
+
+    <title>jQuery Group Inputs</title>
   </head>
 
   <body>
@@ -18,8 +23,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/lusever/groupinputs">View on GitHub</a>
 
-          <h1 id="project_title">Groupinputs</h1>
-          <h2 id="project_tagline">jQuery Group Inputs</h2>
+          <h1 id="project_title">jQuery Group Inputs</h1>
+          <h2 id="project_tagline">Group Inputs Demo</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/lusever/groupinputs/zipball/master">Download this project as a .zip file</a>
@@ -31,39 +36,89 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h2>Credit Card Numbers</h2>
+<p>Example: 1111222233334444</p>
+<p>
+    <input type="text" maxlength="4" class="group1" name="">
+    <input type="text" maxlength="4" class="group1" name="">
+    <input type="text" maxlength="4" class="group1" name="">
+    <input type="text" maxlength="4" class="group1" name="">
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+    <script>
+        $('.group1').groupinputs();
+    </script>
+</p>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<h3>Designer Templates</h3>
+<h2>Expired Date</h2>
+<p>Example: 1214</p>
+<p>
+    <input type="text" maxlength="2" class="group2" name="">
+    <input type="text" maxlength="2" class="group2" name="">
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+    <script>
+        $('.group2').groupinputs();
+    </script>
+</p>
 
-<h3>Rather Drive Stick?</h3>
+<h2>Credit Card Example</h2>
+<p>With clear symbols.</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<div class="creditcard">
+    <div class="creditcard__numbers-wrap">
+        <p class="creditcard__label">
+            <label for="first_number">Card Number</label>
+        </p>
+        <p class="creditcard__numbers"><!--
+            Pattern need for iPhone
+            --><input type="text" id="first_number" name="number[0]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+                type="text" name="number[1]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+                type="text" name="number[2]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+                type="text" name="number[3]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number">
+        </p>
+    </div>
 
-<h3>Authors and Contributors</h3>
+    <div class="creditcard__expired">
+        <p class="creditcard__label">
+            <label for="month">Expiration (MM/YY)</label>
+        </p>
+        <p class="creditcard__fakewrap">
+            <span class="creditcard__input creditcard__expired-fakeinput">/</span>
+            <input type="text" id="month" class="creditcard__transparent-input creditcard__expired-month" value="" name="month" maxlength="2" autocomplete="off">
+            <input type="text" class="creditcard__transparent-input creditcard__expired-year" value="" name="year" maxlength="2" autocomplete="off">
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+        </p>
+    </div>
+</div>
 
-<h3>Support or Contact</h3>
+<script>
+    $('.creditcard__number').groupinputs();
+    $('.creditcard__expired-month,.creditcard__expired-year').groupinputs();
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+    $('.creditcard__number,.creditcard__expired-month,.creditcard__expired-year')
+    .on('input propertychange', function(e) {
+        var elem = $(e.target),
+            value = elem.val(),
+            caret = elem.caret(),
+            newValue = value.replace(/[^0-9]/g, ''),
+            valueDiff = value.length - newValue.length;
+
+        if (valueDiff) {
+            elem
+                .val(newValue)
+                .caret(caret.start - valueDiff, caret.end - valueDiff);
+        }
+    });
+</script>
+ 
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Groupinputs maintained by <a href="https://github.com/lusever">lusever</a></p>
+        <p class="copyright">jQuery Group Inputs maintained by <a href="https://github.com/lusever">lusever</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>

@@ -1,0 +1,117 @@
+.creditcard {
+    position: relative;
+    background: url(../images/creditcard.png) no-repeat 0 0;
+    width: 366px;
+    height: 216px;
+}
+
+.creditcard__input {
+    height: 22px;
+    text-transform: uppercase;
+    font: bold 18px 'Courier New', Courier, sans-serif;
+    color: #434343;
+    height: 22px;
+    padding: 5px 5px 1px;
+    background: #f5f5f7;
+    border: solid 1px #405f88 !important;
+    outline: inherit;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 2px 3px 0 #ccc inset;
+       -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 2px 3px 0 #ccc inset;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 2px 3px 0 #ccc inset;
+}
+
+.creditcard__transparent-input {
+    height: 22px;
+    text-transform: uppercase;
+    font: bold 18px 'Courier New', Courier, sans-serif;
+    color: #434343;
+    padding: 5px 5px 1px;
+    position: absolute;
+    background: transparent;
+    border: 1px solid transparent !important;
+    outline: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+
+.creditcard__expired-fakeinput {
+    display: inline-block;
+    color: #9f9f9f;
+}
+
+
+.creditcard__label {
+    text-shadow: #223e67 0 -1px 0;
+    height: 15px;
+    margin-bottom: 4px;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Numbers */
+.creditcard__numbers-wrap {
+    position: absolute;
+    top: 0;
+    left: 35px;
+    width: 303px;
+}
+
+.creditcard__numbers {
+    position: relative;
+    margin-left: -21px;
+}
+
+.creditcard__number {
+    width: 46px;
+    margin-left: 21px;
+}
+
+/* Expired */
+.creditcard__expired {
+    position: absolute;
+    right: 35px;
+    top: 87px;
+    text-align: right;
+}
+
+.creditcard__expired-fakeinput {
+    height: 22px;
+    text-transform: uppercase;
+    font: bold 18px 'Courier New', Courier, sans-serif;
+    color: #434343;
+    height: 22px;
+    padding: 5px 5px 1px;
+    background: #f5f5f7;
+    border: solid 1px #405f88 !important;
+    outline: inherit;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 3px 0 #cccccc inset;
+       -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 3px 0 #cccccc inset;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 3px 0 #cccccc inset;
+    display: inline-block;
+    color: #9f9f9f;
+    width: 65px;
+    text-align: center;
+}
+
+input.creditcard__expired-year,
+input.creditcard__expired-year-fake {
+    right: 0;
+    width: 23px;
+}
+
+.creditcard__expired-month {
+    right: 35px;
+    width: 30px;
+}
+
+.creditcard__expired-year {
+    right: 0;
+    width: 23px;
+}
