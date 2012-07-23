@@ -1,12 +1,12 @@
-jQuery Group Inputs
-===================
+[jQuery Group Inputs](http://lusever.github.com/groupinputs/)
+=============================================================
 
 Easy data input into several inputs.
 
-Inputs begin to behave as if they share data::
-- When the place is over, the carriage is moved farther
-- Buttons left/right throws a caret to the next/previous input
-- Insert text scatters the text on inputs. After inserting the cursor stands as if it’s an input.
+Inputs begin to behave as if they share data:
+- When one input is filled out the carriage moves to the next
+- Left/right arrows move carriage to the previous/next input
+- Pasting the text will fill out several inputs and carriage will be left in the end of the pasted text as if it was a single input field.
 
 ## Example
 
@@ -26,7 +26,7 @@ Inputs begin to behave as if they share data::
 
 ### Leave only the digits
 
-In the event keydown and keypress does not need to add `preventDefault`, not to kill the user key shortcuts. It’s necessary to clean the box after you enter the symbols as follows:
+`keydown` and `keypress` events don't need to add `preventDefault` in order to keep user defined shortcuts.  It’s necessary to clean the box after you enter the symbols as follows:
 
 ```javascript
 $('.group1').on('input propertychange', function(e) {
@@ -56,4 +56,4 @@ Add an attribute `pattern="[0-9]*"`.
 
 ## Limitations
 
-Does not work in iOS (method did not work `input.focus()`).
+Does not work in iOS (method `input.focus()` does not work).
