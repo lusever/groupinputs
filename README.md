@@ -4,9 +4,9 @@
 Easy data input into several inputs.
 
 Inputs begin to behave as if they share data:
-- When one input is filled out the carriage moves to the next
-- Left/right arrows move carriage to the previous/next input
-- Pasting the text will fill out several inputs and carriage will be left in the end of the pasted text as if it was a single input field.
+- When one input is filled out the cursor moves to the next
+- Left/right arrows move cursor to the previous/next input
+- Pasting the text will fill out several inputs and cursor will be left in the end of the pasted text as if it was a single input field.
 
 ## Example
 
@@ -26,7 +26,7 @@ Inputs begin to behave as if they share data:
 
 ### Leave only the digits
 
-`keydown` and `keypress` events don't need to add `preventDefault` in order to keep user defined shortcuts.  It’s necessary to clean the box after you enter the symbols as follows:
+`keydown` and `keypress` events don't need to add `preventDefault` in order to keep user defined shortcuts. It’s necessary to clean the box after you enter the symbols as follows:
 
 ```javascript
 $('.group1').on('input propertychange', function(e) {
@@ -46,7 +46,7 @@ $('.group1').on('input propertychange', function(e) {
 
 The example uses a plugin [jCaret](http://www.jquery-plugin.buss.hk/my-plugins/jquery-caret-plugin).
 
-###  Show keypad in iOS
+### Show keypad in iOS
 
 Add an attribute `pattern="[0-9]*"`.
 
