@@ -1,4 +1,5 @@
-
+/*global $:false*/
+/*global asyncTest:false, expect:false, strictEqual:false, start: false*/
 asyncTest("paste symbols : [|◊] to [|◊]", function() {
 	var inputs = $("#qunit-fixture input.input1").groupinputs();
 

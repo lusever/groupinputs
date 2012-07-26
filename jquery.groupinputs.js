@@ -200,7 +200,7 @@ $.fn.groupinputs = function() {
             case 'propertychange': // IE8
             case 'input': // webkit set cursor position as [|øøøø◊]
                 // after paste
-                if (elem.attr('maxlength') != options.maxlength) {
+                if (elem.attr('maxlength') !== options.maxlength) {
                     // Chrome fix
                     setTimeout(function() {
                         oninputTimeout(elem, options);
@@ -226,4 +226,4 @@ $.fn.groupinputs = function() {
     return this;
 };
 
-})(jQuery);
+}(jQuery));
