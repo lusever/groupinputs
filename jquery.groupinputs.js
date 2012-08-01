@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.7.2
+ * GroupInputs v. 0.7.3
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -9,8 +9,6 @@
 function caret(node, start, end) {
     var range;
     if (start !== undefined) {
-        // see https://bugzilla.mozilla.org/show_bug.cgi?id=265159
-        node.focus();
         if (node.setSelectionRange) {
             node.setSelectionRange(start, end);
         // IE, "else" for opera 10
@@ -36,7 +34,6 @@ function caret(node, start, end) {
                 if (node.type === 'text') {
                     start = -dup.moveStart('character', -100000);
                     end = start + range.text.length;
-                
                 } else { // textarea
                     var rex = /\r/g;
                     dup.moveToElementText(node);
@@ -82,7 +79,7 @@ $.fn.groupinputs = function() {
         // now state: [001111|2] [33  ]
 
         var firstValue = elem[0].value,
-            caretEnd = elem.caret().end, // in webkit start: 2, end: 6
+            caretEnd = caret(elem[0]).end, // in webkit start: 2, end: 6
             left = firstValue.slice(0, caretEnd), // 001111
             right = firstValue.slice(caretEnd), // 2
             rightFreeSpace = options.maxlength - right.length, // 3
@@ -105,7 +102,7 @@ $.fn.groupinputs = function() {
 
             // caret remains on input
             if (newCaretStart <= options.maxlength) {
-                elem.caret(newCaretStart, newCaretStart);
+                caret(elem[0], newCaretStart, newCaretStart);
                 isSetFocus = true;
             }
 
@@ -125,7 +122,8 @@ $.fn.groupinputs = function() {
                     if (!isSetFocus) {
                         if (newCaretStart < maxlength) {
                             isSetFocus = true;
-                            inputs.eq(i).trigger('focus').caret(newCaretStart, newCaretStart);
+                            inputs.eq(i).focus();
+                            caret(inputs[i], newCaretStart, newCaretStart);
                         }
                         newCaretStart -= valLength;
                     }
@@ -134,7 +132,8 @@ $.fn.groupinputs = function() {
             }
             if (!isSetFocus) {
                 // setTimeout may be necessary for chrome and safari (https://bugs.webkit.org/show_bug.cgi?id=56271)
-                inputs.eq(i).trigger('focus').caret(newCaretStart, newCaretStart);
+                inputs.eq(i).focus();
+                caret(inputs[i], newCaretStart, newCaretStart);
             }
         }
     }
@@ -144,7 +143,7 @@ $.fn.groupinputs = function() {
             options = e.data,
             elem = e.data.elem,
             index = options.index,
-            caret = elem.caret();
+            caretPos;
 
         if ($.browser.opera) { // last check 12
             if (eventSelector === 'keypress') {
@@ -164,24 +163,28 @@ $.fn.groupinputs = function() {
 
         switch (eventSelector) {
             case 'keydown.right':
+                caretPos = caret(elem[0]);
                 if (
-                    caret.start === this.value.length && // caret is last
+                    caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 // input is no last
                 ) {
-                    inputs.eq(index + 1).focus().caret(0, 0);
+                    inputs.eq(index + 1).focus();
+                    caret(inputs[index + 1], 0, 0);
                     e.preventDefault(); // no next motion
                 }
                 break;
             case 'keydown.backspace':
             case 'keydown.left':
+                caretPos = caret(elem[0]);
                 if (
-                    caret.start === caret.end &&
-                    caret.start === 0 && // caret is first
+                    caretPos.start === caretPos.end &&
+                    caretPos.start === 0 && // caret is first
                     index !== 0 // input is no first
                 ) {
                     var toFocus = inputs.eq(index - 1),
                         lengthToFocus = toFocus.val().length;
-                    toFocus.focus().caret(lengthToFocus, lengthToFocus);
+                    toFocus.focus();
+                    caret(toFocus[0], lengthToFocus, lengthToFocus);
                     if (eventSelector === 'keydown.left') {
                         e.preventDefault(); // no next motion
                     }
@@ -190,13 +193,15 @@ $.fn.groupinputs = function() {
             case 'keyup':
             case 'keydown': // repeat is FF10, Webkit, IE
             //case 'keypress': // repeat is FF10, Opera 11
+                caretPos = caret(elem[0]);
                 if (
-                    caret.start === caret.end &&
-                    caret.start === this.value.length && // caret is last
+                    caretPos.start === caretPos.end &&
+                    caretPos.start === this.value.length && // caret is last
                     index !== inputs.length - 1 && // input is no last
                     this.value.length === options.maxlength
                 ) {
-                    inputs.eq(index + 1).focus().caret(0, 0);
+                    inputs.eq(index + 1).focus();
+                    caret(inputs[index + 1], 0, 0);
                 }
                 break;
             case 'paste':
