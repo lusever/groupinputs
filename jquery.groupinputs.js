@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.7.3
+ * GroupInputs v. 0.7.4
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -193,6 +193,11 @@ $.fn.groupinputs = function() {
             case 'keyup':
             case 'keydown': // repeat is FF10, Webkit, IE
             //case 'keypress': // repeat is FF10, Opera 11
+                // ignore system key. ex.: shift
+                if (e.keyCode < 48) {
+                    break;
+                }
+
                 caretPos = caret(elem[0]);
                 if (
                     caretPos.start === caretPos.end &&
