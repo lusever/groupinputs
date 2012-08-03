@@ -30,29 +30,6 @@ function caret(node, start, end) {
             var dup = range.duplicate();
 
             if (range.parentElement() === node) {
-                /* no need code for textarea
-                if (node.type === 'text') {
-                    start = -dup.moveStart('character', -100000);
-                    end = start + range.text.length;
-                } else { // textarea
-                    var rex = /\r/g;
-                    dup.moveToElementText(node);
-                    dup.setEndPoint('EndToStart', range);
-                    start = dup.text.replace(rex, '').length;
-                    dup.setEndPoint('EndToEnd', range);
-                    end = dup.text.replace(rex, '').length;
-                    dup = document.selection.createRange();
-                    dup.moveToElementText(node);
-                    dup.moveStart('character', start);
-                    while (dup.move('character', -dup.compareEndPoints('StartToStart', range))) {
-                        start++;
-                    }
-                    dup.moveStart('character', end - start);
-                    while (dup.move('character', -dup.compareEndPoints('StartToEnd', range))) {
-                        end++;
-                    }
-                }
-                */
                 start = -dup.moveStart('character', -100000);
                 end = start + range.text.length;
             }
@@ -191,8 +168,8 @@ $.fn.groupinputs = function() {
                 }
                 break;
             case 'keyup':
-            case 'keydown': // repeat is FF10, Webkit, IE
-            //case 'keypress': // repeat is FF10, Opera 11
+            case 'keydown': // repeat in FF10, Webkit, IE
+            //case 'keypress': // repeat in FF10, Opera 11
                 // ignore system key. ex.: shift
                 if (e.keyCode < 48) {
                     break;
