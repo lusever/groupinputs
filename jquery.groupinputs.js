@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.7.4
+ * GroupInputs v. 0.8
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -91,13 +91,17 @@ $.fn.groupinputs = function() {
                 while (inputs[++i]) {
                     maxlength = inputsMaxlength[i];
                     buffer += inputs[i].value; // 11233
-                    
-                    inputs.eq(i).val(buffer.slice(0, maxlength));
+
+                    inputs.eq(i)
+                        .val(buffer.slice(0, maxlength))
+                        .change();
 
                     if (buffer.length <= maxlength) {
                         break;
                     }
+
                     valLength = inputs[i].value.length;
+
                     if (!isSetFocus) {
                         if (newCaretStart < maxlength) {
                             isSetFocus = true;
@@ -108,8 +112,6 @@ $.fn.groupinputs = function() {
                     }
                     buffer = buffer.slice(maxlength);
                 }
-
-                inputs.eq(i).change()
             }
             if (!isSetFocus) {
                 // setTimeout may be necessary for chrome and safari (https://bugs.webkit.org/show_bug.cgi?id=56271)

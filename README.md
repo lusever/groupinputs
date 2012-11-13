@@ -57,3 +57,7 @@ Add an attribute `pattern="[0-9]*"`.
 ## Limitations
 
 Does not work in iOS (method `input.focus()` does not work).
+
+## Release History
+
+* 2012-11-13 - v0.8 Add onchange event for non first input.

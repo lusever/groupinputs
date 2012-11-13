@@ -1,5 +1,5 @@
 /*global $:false*/
-/*global asyncTest:false, expect:false, strictEqual:false, start: false*/
+/*global asyncTest:false, expect:false, strictEqual:false, start: false, ok: false*/
 asyncTest("paste symbols : [|◊] to [|◊]", function() {
 	var inputs = $("#qunit-fixture input.input1").groupinputs();
 
@@ -264,6 +264,42 @@ asyncTest("paste value card 9 to [1|234] [5]", function() {
 		strictEqual(caret.start, 2, 'first caret start');
 		strictEqual(caret.end, 2, 'first caret end');
 
+		start();
+	}, 10);
+});
+
+asyncTest("onchange trigger on two inputs", function() {
+	var inputs = $("#qunit-fixture input.input-onchange1").groupinputs();
+	expect(1);
+
+	inputs.change(function() {
+		ok(true, 'input#' + inputs.index(this) + ' onchanged');
+	});
+
+	inputs.eq(0).triggerHandler("paste");
+	inputs.eq(0).val("12345");
+	inputs.eq(0).caret(5, 5);
+	inputs.eq(0).triggerHandler("input");
+
+	setTimeout(function() {
+		start();
+	}, 10);
+});
+
+asyncTest("onchange trigger on three inputs", function() {
+	var inputs = $("#qunit-fixture input.input-onchange2").groupinputs();
+	expect(2);
+
+	inputs.change(function() {
+		ok(true, 'input#' + inputs.index(this) + ' onchanged');
+	});
+
+	inputs.eq(0).triggerHandler("paste");
+	inputs.eq(0).val("123456789");
+	inputs.eq(0).caret(9, 9);
+	inputs.eq(0).triggerHandler("input");
+
+	setTimeout(function() {
 		start();
 	}, 10);
 });
