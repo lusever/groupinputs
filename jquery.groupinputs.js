@@ -1,5 +1,5 @@
 /**
- * GroupInputs v. 0.8
+ * GroupInputs v. 0.8.1
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
@@ -176,8 +176,19 @@ $.fn.groupinputs = function() {
             case 'keyup':
             case 'keydown': // repeat in FF10, Webkit, IE
             //case 'keypress': // repeat in FF10, Opera 11
-                // ignore system key. ex.: shift
+                // ignore system key. ex. shift
                 if (e.keyCode < 48) {
+                    break;
+                }
+
+                // ignore ctrl + any key
+                if (eventSelector === 'keyup' && options.ignoreNextKeyup) {
+                    options.ignoreNextKeyup = false;
+                    break;
+                }
+                if (e.metaKey) {
+                    // metaKey is ignored in browsers on keyup
+                    options.ignoreNextKeyup = true;
                     break;
                 }
 
