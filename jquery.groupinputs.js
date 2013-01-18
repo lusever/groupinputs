@@ -1,10 +1,12 @@
 /**
- * GroupInputs v. 0.8.1
+ * GroupInputs v. 0.8.2
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
  */
 (function($) {
+
+var MAXLENGTH = 'maxlength';
 
 function caret(node, start, end) {
     var range;
@@ -122,30 +124,24 @@ $.fn.groupinputs = function() {
     }
 
     function handler(e) {
-        var eventSelector = e.type,
+        var eventType = e.type,
             options = e.data,
             elem = e.data.elem,
             index = options.index,
             caretPos;
 
         if ($.browser.opera) { // last check 12
-            if (eventSelector === 'keypress') {
-                eventSelector = 'keydown';
-            }
-            if (eventSelector === 'input') {
-                eventSelector += '.opera';
+            if (eventType === 'keypress') {
+                eventType = 'keydown';
             }
         }
 
-        switch (e.keyCode) {
-            case 8 : eventSelector += '.backspace'; break;
-            case 37: eventSelector += '.left'; break;
-            case 39: eventSelector += '.right'; break;
-            case 46: eventSelector += '.delete'; break;
-        }
+        var LEFT_CODE = 37,
+            BACKSPACE_CODE = 8,
+            DELETE_CODE = 46,
+            RIGHT_CODE = 39;
 
-        switch (eventSelector) {
-            case 'keydown.right':
+            if (eventType === 'keydown' && e.keyCode === RIGHT_CODE) {
                 caretPos = caret(elem[0]);
                 if (
                     caretPos.start === this.value.length && // caret is last
@@ -155,9 +151,8 @@ $.fn.groupinputs = function() {
                     caret(inputs[index + 1], 0, 0);
                     e.preventDefault(); // no next motion
                 }
-                break;
-            case 'keydown.backspace':
-            case 'keydown.left':
+            }
+            if (eventType === 'keydown' && (e.keyCode === BACKSPACE_CODE || e.keyCode === LEFT_CODE)) {
                 caretPos = caret(elem[0]);
                 if (
                     caretPos.start === caretPos.end &&
@@ -168,28 +163,28 @@ $.fn.groupinputs = function() {
                         lengthToFocus = toFocus.val().length;
                     toFocus.focus();
                     caret(toFocus[0], lengthToFocus, lengthToFocus);
-                    if (eventSelector === 'keydown.left') {
+                    if (e.keyCode === LEFT_CODE) {
                         e.preventDefault(); // no next motion
                     }
                 }
-                break;
-            case 'keyup':
-            case 'keydown': // repeat in FF10, Webkit, IE
+            }
+            if (eventType === 'keyup' ||
+                eventType === 'keydown') { // repeat in FF10, Webkit, IE
             //case 'keypress': // repeat in FF10, Opera 11
                 // ignore system key. ex. shift
                 if (e.keyCode < 48) {
-                    break;
+                    return;
                 }
 
                 // ignore ctrl + any key
-                if (eventSelector === 'keyup' && options.ignoreNextKeyup) {
+                if (eventType === 'keyup' && options.ignoreNextKeyup) {
                     options.ignoreNextKeyup = false;
-                    break;
+                    return;
                 }
                 if (e.metaKey) {
                     // metaKey is ignored in browsers on keyup
                     options.ignoreNextKeyup = true;
-                    break;
+                    return;
                 }
 
                 caretPos = caret(elem[0]);
@@ -202,33 +197,36 @@ $.fn.groupinputs = function() {
                     inputs.eq(index + 1).focus();
                     caret(inputs[index + 1], 0, 0);
                 }
-                break;
-            case 'paste':
-                elem.attr('maxlength', totalMaxlength);
-                break;
+            }
+            if (eventType === 'paste') {
+                elem.attr(MAXLENGTH, totalMaxlength);
+            }
 /*            case 'keypress':
-                elem.attr('maxlength', options.maxlength + 1);
+                elem.attr(MAXLENGTH, options.maxlength + 1);
                 break;*/
-            case 'propertychange': // IE8
-            case 'input': // webkit set cursor position as [00|11112]
+            if (eventType === 'propertychange' || // IE8
+                eventType === 'input') { // webkit set cursor position as [00|11112]
                 // after paste
-                if (elem.attr('maxlength') !== options.maxlength) {
+                if (elem.attr(MAXLENGTH) !== options.maxlength) {
                     // Chrome fix
                     setTimeout(function() {
                         afterPaste(elem, options);
-                        elem.attr('maxlength', options.maxlength);
+                        elem.attr(MAXLENGTH, options.maxlength);
                     }, 0);
                 }
-                break;
-            case 'input.opera':
+            }
+            if (eventType === 'input' && $.browser.opera) {
                 afterPaste(elem, options);
-                break;
-        }
+            }
     }
 
-    inputs.each(function(i) {
+    // opera not support paste event
+    if ($.browser.opera) {
+        inputs.attr(MAXLENGTH, totalMaxlength);
+    }
+    return inputs.each(function(i) {
         var elem = inputs.eq(i),
-            maxlength = +elem.attr('maxlength');
+            maxlength = +elem.attr(MAXLENGTH);
 
         totalMaxlength += maxlength;
         inputsMaxlength.push(maxlength);
@@ -239,13 +237,6 @@ $.fn.groupinputs = function() {
             maxlength: maxlength
         }, handler);
     });
-
-    // opera not support paste event
-    if ($.browser.opera) {
-        inputs.attr('maxlength', totalMaxlength);
-    }
-
-    return this;
 };
 
 }(jQuery));
