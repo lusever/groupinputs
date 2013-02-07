@@ -60,6 +60,7 @@ Does not work in iOS (method `input.focus()` does not work).
 
 ## Release History
 
+* 2013-01-18 - v0.8.3 Support for jQuery 1.9.
 * 2013-01-18 - v0.8.2 Change UglifyJS to Google Closure Compler.
 * 2012-11-15 - v0.8.1 Fixed change cursor on ctrl and command key.
 * 2012-11-13 - v0.8 Add onchange event for non first input.

@@ -3,7 +3,25 @@
 <head>
     <meta charset="utf-8">
     <title>Combine Navigation Test</title>
-    <script src="jquery-1.7.2.js"></script>
+    <script>
+        (function() {
+            // Get any jquery=___ param from the query string.
+            var jqversion = location.search.match(/[?&]jquery=(.*?)(?=&|$)/);
+            var path;
+            if (jqversion) {
+                // A version was specified, load that version from code.jquery.com.
+                path = '//ajax.googleapis.com/ajax/libs/jquery/' + jqversion[1] + '/jquery.js';
+            } else {
+                // No version was specified, load the local version.
+                path = 'jquery.js';
+            }
+            // This is the only time I'll ever use document.write, I promise!
+            document.write('<scr'+'ipt src="' + path + '"></scr'+'ipt>');
+            if (jqversion) {
+                document.write('<scr'+'ipt src="http://code.jquery.com/jquery-migrate-1.1.0.min.js"></scr'+'ipt>');
+            }
+        }());
+    </script>
     <script src="jquery.caret.1.02.js"></script>
     <script src="../jquery.groupinputs.js"></script>
     <script src="qunit/qunit/qunit.js"></script>

@@ -1,12 +1,14 @@
 /**
- * GroupInputs v. 0.8.2
+ * GroupInputs v. 0.8.3
  * @author Pavel Kornilov <pk@ostrovok.ru> <lusever@lusever.com>
  * https://github.com/lusever/groupinputs
  * MIT Licensed
  */
 (function($) {
+'use strict';
 
-var MAXLENGTH = 'maxlength';
+var isOpera = !!window.opera,
+    MAXLENGTH = 'maxlength';
 
 function caret(node, start, end) {
     var range;
@@ -127,10 +129,10 @@ $.fn.groupinputs = function() {
         var eventType = e.type,
             options = e.data,
             elem = e.data.elem,
-            index = options.index,
+            index = e.data.index,
             caretPos;
 
-        if ($.browser.opera) { // last check 12
+        if (isOpera) { // last check 12
             if (eventType === 'keypress') {
                 eventType = 'keydown';
             }
@@ -215,16 +217,12 @@ $.fn.groupinputs = function() {
                     }, 0);
                 }
             }
-            if (eventType === 'input' && $.browser.opera) {
+            if (eventType === 'input' && isOpera) {
                 afterPaste(elem, options);
             }
     }
 
-    // opera not support paste event
-    if ($.browser.opera) {
-        inputs.attr(MAXLENGTH, totalMaxlength);
-    }
-    return inputs.each(function(i) {
+    inputs.each(function(i) {
         var elem = inputs.eq(i),
             maxlength = +elem.attr(MAXLENGTH);
 
@@ -237,6 +235,13 @@ $.fn.groupinputs = function() {
             maxlength: maxlength
         }, handler);
     });
+
+    // opera not support paste event
+    if (isOpera) {
+        inputs.attr(MAXLENGTH, totalMaxlength);
+    }
+
+    return inputs;
 };
 
 }(jQuery));
