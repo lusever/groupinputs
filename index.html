@@ -2,8 +2,7 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta charset="utf-8" />
     <meta name="description" content="jQuery Group Inputs : Group Inputs Demo" />
 
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css">
@@ -40,14 +39,14 @@
 <h2>Credit Card Numbers</h2>
 <p>Example: 1111222233334444</p>
 <p>
-    <input type="text" maxlength="4" class="group1" name="">
-    <input type="text" maxlength="4" class="group1" name="">
-    <input type="text" maxlength="4" class="group1" name="">
-    <input type="text" maxlength="4" class="group1" name="">
+  <input type="text" maxlength="4" class="group1" name="">
+  <input type="text" maxlength="4" class="group1" name="">
+  <input type="text" maxlength="4" class="group1" name="">
+  <input type="text" maxlength="4" class="group1" name="">
 
-    <script>
-        $('.group1').groupinputs();
-    </script>
+  <script>
+      $('.group1').groupinputs();
+  </script>
 </p>
 
 
@@ -66,50 +65,49 @@
 <p>With clear symbols.</p>
 
 <div class="creditcard">
-    <div class="creditcard__numbers-wrap">
-        <p class="creditcard__label">
-            <label for="first_number">Card Number</label>
-        </p>
-        <p class="creditcard__numbers"><!--
-            Pattern need for iPhone
-            --><input type="text" id="first_number" name="number[0]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
-                type="text" name="number[1]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
-                type="text" name="number[2]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
-                type="text" name="number[3]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number">
-        </p>
-    </div>
+  <div class="creditcard__numbers-wrap">
+    <p class="creditcard__label">
+      <label for="first_number">Card Number</label>
+    </p>
+    <p class="creditcard__numbers"><!--
+      Pattern need for iPhone
+      --><input type="text" id="first_number" name="number[0]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+        type="text" name="number[1]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+        type="text" name="number[2]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number"><input
+        type="text" name="number[3]" value="" maxlength="4" pattern="[0-9]*" class="creditcard__input creditcard__number">
+    </p>
+  </div>
 
-    <div class="creditcard__expired">
-        <p class="creditcard__label">
-            <label for="month">Expiration (MM/YY)</label>
-        </p>
-        <p class="creditcard__fakewrap">
-            <span class="creditcard__input creditcard__expired-fakeinput">/</span>
-            <input type="text" id="month" class="creditcard__transparent-input creditcard__expired-month" value="" name="month" maxlength="2" autocomplete="off">
-            <input type="text" class="creditcard__transparent-input creditcard__expired-year" value="" name="year" maxlength="2" autocomplete="off">
-
-        </p>
-    </div>
+  <div class="creditcard__expired">
+    <p class="creditcard__label">
+      <label for="month">Expiration (MM/YY)</label>
+    </p>
+    <p class="creditcard__fakewrap">
+      <span class="creditcard__input creditcard__expired-fakeinput">/</span>
+      <input type="text" id="month" class="creditcard__transparent-input creditcard__expired-month" value="" name="month" maxlength="2" autocomplete="off">
+      <input type="text" class="creditcard__transparent-input creditcard__expired-year" value="" name="year" maxlength="2" autocomplete="off">
+    </p>
+  </div>
 </div>
 
 <script>
-    $('.creditcard__number').groupinputs();
-    $('.creditcard__expired-month,.creditcard__expired-year').groupinputs();
+  $('.creditcard__number').groupinputs();
+  $('.creditcard__expired-month,.creditcard__expired-year').groupinputs();
 
-    $('.creditcard__number,.creditcard__expired-month,.creditcard__expired-year')
-    .on('input propertychange', function(e) {
-        var elem = $(e.target),
-            value = elem.val(),
-            caret = elem.caret(),
-            newValue = value.replace(/[^0-9]/g, ''),
-            valueDiff = value.length - newValue.length;
+  $('.creditcard__number,.creditcard__expired-month,.creditcard__expired-year')
+  .on('input propertychange', function(e) {
+    var elem = $(e.target);
+    var value = elem.val();
+    var caret = elem.caret();
+    var newValue = value.replace(/[^0-9]/g, '');
+    var valueDiff = value.length - newValue.length;
 
-        if (valueDiff) {
-            elem
-                .val(newValue)
-                .caret(caret.start - valueDiff, caret.end - valueDiff);
-        }
-    });
+    if (valueDiff) {
+      elem
+      .val(newValue)
+      .caret(caret.start - valueDiff, caret.end - valueDiff);
+    }
+  });
 </script>
  
       </section>
@@ -123,7 +121,16 @@
       </footer>
     </div>
 
-    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45278580-1', 'lusever.github.io');
+      ga('send', 'pageview');
+
+    </script>
 
   </body>
 </html>
