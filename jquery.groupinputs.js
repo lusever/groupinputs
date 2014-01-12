@@ -59,7 +59,8 @@ $.fn.groupinputs = function() {
         // for example, inputs value before paste: [00|2 ] [33  ], need paste: 1111
         // now state: [001111|2] [33  ]
 
-        var firstValue = elem[0].value,
+        //var firstValue = elem[0].value,
+        var firstValue = filterString(elem[0].value),
             caretEnd = caret(elem[0]).end, // in webkit start: 2, end: 6
             left = firstValue.slice(0, caretEnd), // 001111
             right = firstValue.slice(caretEnd), // 2
@@ -222,6 +223,12 @@ $.fn.groupinputs = function() {
             }
     }
 
+    function filterString(str){
+        str=str.replace(/\s+/g, '');
+        str=str.replace(/\-/g, '');
+        return str;
+    }
+
     inputs.each(function(i) {
         var elem = inputs.eq(i),
             maxlength = +elem.attr(MAXLENGTH);
@@ -229,11 +236,23 @@ $.fn.groupinputs = function() {
         totalMaxlength += maxlength;
         inputsMaxlength.push(maxlength);
 
-        elem.on('keydown keypress keyup input paste propertychange', {
-            elem: elem,
-            index: i,
-            maxlength: maxlength
-        }, handler);
+//        elem.on('keydown keypress keyup input paste propertychange', {
+//            elem: elem,
+//            index: i,
+//            maxlength: maxlength
+//        }, handler);
+
+        //для старых версий jquery
+        elem.bind('keydown keypress keyup input paste propertychange', function(e){
+            e.data={
+                elem: elem,
+                index: i,
+                maxlength: maxlength
+            };
+            var ctx=$(elem).get(0);
+            handler.apply(ctx, [e]);
+            //handler(e);
+        } );
     });
 
     // opera not support paste event
