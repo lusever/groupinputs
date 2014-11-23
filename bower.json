@@ -1,0 +1,22 @@
+{
+  "name": "groupinputs",
+  "version": "0.8.3",
+  "homepage": "http://lusever.github.io/groupinputs/",
+  "authors": [
+    "Pavel Kornilov <lusever@lusever.com>"
+  ],
+  "description": "Easy data input into several inputs.",
+  "main": "jquery.groupinputs.js",
+  "keywords": [
+    "jQuery",
+    "plugin",
+    "input"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "test"
+  ],
+  "devDependencies": {
+    "qunit": "~1.15.0"
+  }
+}
