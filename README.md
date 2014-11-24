@@ -8,6 +8,12 @@ Inputs begin to behave as if they share data:
 - Left/right arrows move cursor to the previous/next input
 - Pasting the text will fill out several inputs and cursor will be left in the end of the pasted text as if it was a single input field.
 
+## Installation
+
+```sh
+bower install --save groupinputs
+```
+
 ## Example
 
 ```html
